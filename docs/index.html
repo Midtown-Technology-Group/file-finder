@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Finder CLI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <div class="hero-shell">
+                <div class="eyebrow">Midtown Toy Chest</div>
+                <h1>File Finder CLI</h1>
+                <p class="tagline">Read-only Microsoft 365 file discovery for recent documents, targeted OneDrive search, and script-friendly output.</p>
+                <div class="actions">
+                    <a class="btn btn-primary" href="https://github.com/Midtown-Technology-Group/file-finder">View on GitHub</a>
+                    <a class="btn btn-secondary" href="#install">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <div class="container">
+                <div class="grid">
+                    <article class="card">
+                        <h2>Scope</h2>
+                        <p>Uses `Files.Read` only. No write access and no SharePoint-wide escalation.</p>
+                    </article>
+                    <article class="card">
+                        <h2>Commands</h2>
+                        <ul class="bullet-list">
+                            <li><code>recent</code> for recently touched files</li>
+                            <li><code>search</code> for focused OneDrive lookup</li>
+                            <li><code>--output json</code> for automation</li>
+                        </ul>
+                    </article>
+                    <article class="card">
+                        <h2>Auth</h2>
+                        <p>Built on the shared Windows-first auth foundation with WAM-first sign-in for lightweight onboarding.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="install">
+            <div class="container">
+                <h2>Quick Start</h2>
+                <div class="code-block"><code>$env:FILE_FINDER_CLIENT_ID='e02be6f7-063a-46a6-b2cc-109d5f51055c'
+$env:FILE_FINDER_TENANT_ID='a3599b15-c39c-4b41-a219-7e24dd5b5190'
+$env:FILE_FINDER_SCOPES='Files.Read'
+$env:FILE_FINDER_AUTH_MODE='wam'
+$env:FILE_FINDER_ALLOW_BROKER='true'
+.\invoke.ps1 recent --limit 10</code></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Midtown Technology Group · GitHub Pages project site</p>
+        </div>
+    </footer>
+</body>
+</html>

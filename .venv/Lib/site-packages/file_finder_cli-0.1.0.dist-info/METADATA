@@ -1,0 +1,49 @@
+Metadata-Version: 2.4
+Name: file-finder-cli
+Version: 0.1.0
+Summary: Read-only Microsoft 365 file finder for Midtown's toy chest
+Author-email: Thomas Bray <thomas.bray@midtown.net>
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: typer>=0.9.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: pydantic>=2.0
+Requires-Dist: mtg-microsoft-auth @ file:///C:/Users/ThomasBray/src/midtown-org-scan/microsoft-auth
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+
+# File Finder CLI
+
+Read-only Microsoft 365 file discovery for the Midtown toy chest.
+
+## Required Scope
+
+- `Files.Read`
+
+This toy extends the shared app registration by one delegated read-only scope when you are ready to verify it live.
+
+## Environment
+
+```powershell
+$env:FILE_FINDER_CLIENT_ID='e02be6f7-063a-46a6-b2cc-109d5f51055c'
+$env:FILE_FINDER_TENANT_ID='a3599b15-c39c-4b41-a219-7e24dd5b5190'
+$env:FILE_FINDER_SCOPES='Files.Read'
+$env:FILE_FINDER_AUTH_MODE='wam'
+$env:FILE_FINDER_ALLOW_BROKER='true'
+```
+
+## Usage
+
+```powershell
+.\invoke.ps1 recent --limit 10
+.\invoke.ps1 search "proposal" --limit 10
+.\invoke.ps1 --output json recent
+```
+
+## Commands
+
+- `recent`: List recently accessed files.
+- `search`: Search OneDrive for files by query text.

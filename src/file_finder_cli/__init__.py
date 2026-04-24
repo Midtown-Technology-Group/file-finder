@@ -1,0 +1,2 @@
+"""File finder CLI."""
+
