@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Finder CLI</title>
+    <title>File Finder</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
         <div class="container">
             <div class="hero-shell">
                 <div class="eyebrow">Midtown Toy Chest</div>
-                <h1>File Finder CLI</h1>
+                <h1>File Finder</h1>
                 <p class="tagline">Read-only Microsoft 365 file discovery for recent documents, targeted OneDrive search, and script-friendly output.</p>
                 <div class="actions">
                     <a class="btn btn-primary" href="https://github.com/Midtown-Technology-Group/file-finder">View on GitHub</a>
@@ -26,8 +26,8 @@
             <div class="container">
                 <div class="grid">
                     <article class="card">
-                        <h2>Scope</h2>
-                        <p>Uses `Files.Read` only. No write access and no SharePoint-wide escalation.</p>
+                        <h2>Status</h2>
+                        <p>Parked as a prototype for now. In this tenant, `Files.Read` currently triggers a consent prompt, so this toy is not part of the easy-onboarding wave.</p>
                     </article>
                     <article class="card">
                         <h2>Commands</h2>
@@ -39,7 +39,7 @@
                     </article>
                     <article class="card">
                         <h2>Auth</h2>
-                        <p>Built on the shared Windows-first auth foundation with WAM-first sign-in for lightweight onboarding.</p>
+                        <p>Built on the shared Windows-first auth foundation, but tenant consent still needs to be sorted out before this can be treated as friction-light.</p>
                     </article>
                 </div>
             </div>
@@ -47,13 +47,14 @@
 
         <section id="install">
             <div class="container">
-                <h2>Quick Start</h2>
+                <h2>Prototype Use</h2>
                 <div class="code-block"><code>$env:FILE_FINDER_CLIENT_ID='e02be6f7-063a-46a6-b2cc-109d5f51055c'
 $env:FILE_FINDER_TENANT_ID='a3599b15-c39c-4b41-a219-7e24dd5b5190'
 $env:FILE_FINDER_SCOPES='Files.Read'
 $env:FILE_FINDER_AUTH_MODE='wam'
 $env:FILE_FINDER_ALLOW_BROKER='true'
 .\invoke.ps1 recent --limit 10</code></div>
+                <p class="scope-note">Expect a tenant consent prompt until the shared app registration is revisited.</p>
             </div>
         </section>
     </main>
