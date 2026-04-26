@@ -12,7 +12,7 @@
             <div class="hero-shell">
                 <div class="eyebrow">Midtown Toy Chest</div>
                 <h1>File Finder</h1>
-                <p class="tagline">Read-only Microsoft 365 file discovery for recent documents, targeted OneDrive search, and script-friendly output.</p>
+                <p class="tagline">Microsoft 365 file discovery and delegated file actions for recent documents, targeted search, and script-friendly automation.</p>
                 <div class="actions">
                     <a class="btn btn-primary" href="https://github.com/Midtown-Technology-Group/file-finder">View on GitHub</a>
                     <a class="btn btn-secondary" href="#install">Get Started</a>
@@ -26,20 +26,20 @@
             <div class="container">
                 <div class="grid">
                     <article class="card">
-                        <h2>Status</h2>
-                        <p>Parked as a prototype for now. In this tenant, `Files.Read` currently triggers a consent prompt, so this toy is not part of the easy-onboarding wave.</p>
+                        <h2>Scope</h2>
+                        <p>Uses delegated `Files.ReadWrite` for discovery and compact file operations without broad org-wide permissions.</p>
                     </article>
                     <article class="card">
                         <h2>Commands</h2>
                         <ul class="bullet-list">
-                            <li><code>recent</code> for recently touched files</li>
-                            <li><code>search</code> for focused OneDrive lookup</li>
+                            <li><code>recent</code> and <code>search</code> for focused OneDrive lookup</li>
+                            <li><code>mkdir</code>, <code>rename</code>, <code>move</code>, and <code>delete</code> for compact file operations</li>
                             <li><code>--output json</code> for automation</li>
                         </ul>
                     </article>
                     <article class="card">
                         <h2>Auth</h2>
-                        <p>Built on the shared Windows-first auth foundation, but tenant consent still needs to be sorted out before this can be treated as friction-light.</p>
+                        <p>Built on the shared Windows-first auth foundation with WAM-first sign-in and the shared Graph client pattern.</p>
                     </article>
                 </div>
             </div>
@@ -47,14 +47,15 @@
 
         <section id="install">
             <div class="container">
-                <h2>Prototype Use</h2>
+                <h2>Quick Start</h2>
                 <div class="code-block"><code>$env:FILE_FINDER_CLIENT_ID='e02be6f7-063a-46a6-b2cc-109d5f51055c'
 $env:FILE_FINDER_TENANT_ID='a3599b15-c39c-4b41-a219-7e24dd5b5190'
-$env:FILE_FINDER_SCOPES='Files.Read'
+$env:FILE_FINDER_SCOPES='Files.ReadWrite'
 $env:FILE_FINDER_AUTH_MODE='wam'
 $env:FILE_FINDER_ALLOW_BROKER='true'
-.\invoke.ps1 recent --limit 10</code></div>
-                <p class="scope-note">Expect a tenant consent prompt until the shared app registration is revisited.</p>
+.\invoke.ps1 recent --limit 10
+.\invoke.ps1 mkdir "Codex Folder"</code></div>
+                <p class="scope-note">Use JSON output for automation and pair the item ids from discovery commands with rename, move, or delete.</p>
             </div>
         </section>
     </main>

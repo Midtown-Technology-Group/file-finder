@@ -5,6 +5,7 @@ import os
 from mtg_microsoft_auth import AuthConfig, AuthMode
 
 REQUIRED_SCOPE = "Files.Read"
+WRITE_SCOPE = "Files.ReadWrite"
 
 
 def _env_bool(name: str, default: bool) -> bool:
@@ -31,4 +32,9 @@ def load_auth_config() -> AuthConfig:
 
 
 def has_required_scope() -> bool:
-    return REQUIRED_SCOPE in set(configured_scopes())
+    scopes = set(configured_scopes())
+    return REQUIRED_SCOPE in scopes or WRITE_SCOPE in scopes
+
+
+def has_write_scope() -> bool:
+    return WRITE_SCOPE in set(configured_scopes())

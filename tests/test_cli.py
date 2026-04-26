@@ -1,7 +1,7 @@
 from typer.testing import CliRunner
 
 from file_finder_cli.cli import app
-from file_finder_cli.models import DriveItemCard
+from file_finder_cli.models import DriveItemCard, FileActionResult
 
 
 class FakeService:
@@ -19,6 +19,18 @@ class FakeService:
 
     def search(self, query: str, limit: int):
         return self.recent(limit)
+
+    def make_folder(self, name: str, parent_id: str | None = None):
+        return FileActionResult(action="mkdir", item_id="folder-1", name=name, parent_id=parent_id)
+
+    def rename(self, item_id: str, name: str):
+        return FileActionResult(action="rename", item_id=item_id, name=name)
+
+    def move(self, item_id: str, destination_id: str):
+        return FileActionResult(action="move", item_id=item_id, name=item_id, destination_id=destination_id)
+
+    def delete(self, item_id: str):
+        return FileActionResult(action="delete", item_id=item_id, name=item_id)
 
 
 def test_recent_command_supports_json_output(monkeypatch):
@@ -40,3 +52,25 @@ def test_missing_scope_explains_required_files_permission(monkeypatch):
 
     assert result.exit_code != 0
     assert "Files.Read" in result.stdout
+
+
+def test_mkdir_command_supports_json_output(monkeypatch):
+    monkeypatch.setattr("file_finder_cli.cli.build_service", lambda: FakeService())
+    monkeypatch.setattr("file_finder_cli.cli.has_write_scope", lambda: True)
+    runner = CliRunner()
+
+    result = runner.invoke(app, ["--output", "json", "mkdir", "Codex Folder"])
+
+    assert result.exit_code == 0
+    assert '"action":"mkdir"' in result.stdout
+    assert '"name":"Codex Folder"' in result.stdout
+
+
+def test_write_scope_error_mentions_files_readwrite(monkeypatch):
+    monkeypatch.setattr("file_finder_cli.cli.has_write_scope", lambda: False)
+    runner = CliRunner()
+
+    result = runner.invoke(app, ["mkdir", "Codex Folder"])
+
+    assert result.exit_code != 0
+    assert "Files.ReadWrite" in result.stdout
