@@ -23,8 +23,9 @@ def configured_scopes() -> list[str]:
 
 
 def load_auth_config() -> AuthConfig:
+    client_id = os.environ.get("FILE_FINDER_CLIENT_ID", "").strip() or DEFAULT_CLIENT_ID
     return AuthConfig(
-        client_id=os.environ.get("FILE_FINDER_CLIENT_ID", DEFAULT_CLIENT_ID),
+        client_id=client_id,
         tenant_id=os.environ.get("FILE_FINDER_TENANT_ID", "common"),
         scopes=configured_scopes(),
         mode=AuthMode(os.environ.get("FILE_FINDER_AUTH_MODE", "wam")),
