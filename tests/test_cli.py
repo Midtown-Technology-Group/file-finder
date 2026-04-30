@@ -1,6 +1,7 @@
 from typer.testing import CliRunner
 
 from file_finder_cli.cli import app
+from file_finder_cli.config import DEFAULT_CLIENT_ID, load_auth_config
 from file_finder_cli.models import DriveItemCard, FileActionResult
 
 
@@ -74,3 +75,27 @@ def test_write_scope_error_mentions_files_readwrite(monkeypatch):
 
     assert result.exit_code != 0
     assert "Files.ReadWrite" in result.stdout
+
+
+def test_load_auth_config_defaults_to_shared_client_id(monkeypatch):
+    monkeypatch.delenv("FILE_FINDER_CLIENT_ID", raising=False)
+
+    config = load_auth_config()
+
+    assert config.client_id == DEFAULT_CLIENT_ID
+
+
+def test_load_auth_config_ignores_blank_client_id_override(monkeypatch):
+    monkeypatch.setenv("FILE_FINDER_CLIENT_ID", "   ")
+
+    config = load_auth_config()
+
+    assert config.client_id == DEFAULT_CLIENT_ID
+
+
+def test_load_auth_config_allows_client_id_override(monkeypatch):
+    monkeypatch.setenv("FILE_FINDER_CLIENT_ID", "11111111-1111-1111-1111-111111111112")
+
+    config = load_auth_config()
+
+    assert config.client_id == "11111111-1111-1111-1111-111111111112"

@@ -7,6 +7,7 @@ from mtg_microsoft_auth import AuthConfig, AuthMode
 REQUIRED_SCOPE = "Files.Read"
 WRITE_SCOPE = "Files.ReadWrite"
 DEFAULT_CACHE_NAMESPACE = "mtg-shared-microsoft-auth"
+DEFAULT_CLIENT_ID = "e02be6f7-063a-46a6-b2cc-109d5f51055c"
 
 
 def _env_bool(name: str, default: bool) -> bool:
@@ -22,8 +23,9 @@ def configured_scopes() -> list[str]:
 
 
 def load_auth_config() -> AuthConfig:
+    client_id = os.environ.get("FILE_FINDER_CLIENT_ID", "").strip() or DEFAULT_CLIENT_ID
     return AuthConfig(
-        client_id=os.environ.get("FILE_FINDER_CLIENT_ID", "11111111-1111-1111-1111-111111111111"),
+        client_id=client_id,
         tenant_id=os.environ.get("FILE_FINDER_TENANT_ID", "common"),
         scopes=configured_scopes(),
         mode=AuthMode(os.environ.get("FILE_FINDER_AUTH_MODE", "wam")),
