@@ -1,0 +1,41 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="File Finder"
+    Manufacturer="Midtown Technology Group LLC"
+    Version="$(var.Version)"
+    UpgradeCode="{D61E251F-2A49-4854-BE1F-A69B2ACD972F}"
+    InstallerVersion="500"
+    Scope="perMachine">
+
+    <SummaryInformation Description="File Finder installer" Manufacturer="Midtown Technology Group LLC" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of File Finder is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLROOT" Name="Midtown Technology Group">
+        <Directory Id="INSTALLFOLDER" Name="File Finder" />
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="File Finder" Level="1">
+      <ComponentGroupRef Id="ToolComponents" />
+    </Feature>
+
+    <ComponentGroup Id="ToolComponents" Directory="INSTALLFOLDER">
+      <Component Id="ToolExecutableComponent" Guid="*">
+        <File Id="ToolExecutable" Source="$(var.BinDir)\file-finder.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="PathComponent" Guid="{88197475-51F1-48E9-A086-0900301E5B29}">
+        <CreateFolder />
+        <Environment
+          Id="ToolPathEntry"
+          Action="set"
+          Name="PATH"
+          Part="last"
+          Permanent="no"
+          System="yes"
+          Value="[INSTALLFOLDER]" />
+      </Component>
+    </ComponentGroup>
+  </Package>
+</Wix>
