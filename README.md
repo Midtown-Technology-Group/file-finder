@@ -43,6 +43,10 @@ This toy now shares the Midtown Graph token cache with the other local toys by d
 - `move`: Move a file or folder into another parent item by destination id.
 - `delete`: Delete a file or folder by drive item id.
 
+## Windows MSI
+
+GitHub releases can publish a Windows MSI for `file-finder`. The MSI installs per-machine under `Program Files` and adds the install folder to the system `PATH`, so installation requires administrator rights. If Windows blocks installation or PATH updates, rerun the installer from an elevated shell or contact IT.
+
 ## Project Site
 
 This repo includes a lightweight GitHub Pages site in `docs/`.
