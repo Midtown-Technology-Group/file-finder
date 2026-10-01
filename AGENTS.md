@@ -2,7 +2,7 @@
 
 File Finder discovers Microsoft 365 files and performs delegated folder/file actions. Read [README](README.md), `pyproject.toml` and [pressure-test notes](PRESSURE_TEST.md). Implementation modules under `src/file_finder_cli/` separate CLI, service, repository, models and configuration.
 
-Preserve the distinction between `recent`/`search` and writes: `mkdir`, `rename`, `move`, `delete`. The default scope bundle uses `Files.ReadWrite`; possessing that scope does not authorize a mutation. Confirm the exact account, drive item, destination and requested action before live writes. Use disposable data for destructive verification and reread the affected item after an authorized action. Discovery results alone are not a cleanup plan.
+Preserve the distinction between `recent`/`search` and writes: `mkdir`, `rename`, `move`, `delete`. With `FILE_FINDER_SCOPES` unset, discovery defaults to `Files.Read`; set `FILE_FINDER_SCOPES=Files.ReadWrite` before using write commands. Possessing that scope does not authorize a mutation. Confirm the exact account, drive item, destination and requested action before live writes. Use disposable data for destructive verification and reread the affected item after an authorized action. Discovery results alone are not a cleanup plan.
 
 Use the shared MTG Microsoft Auth application and cache without incidental identity/scope changes. Isolate tests with `MTG_AUTH_CACHE_NAMESPACE` when appropriate and preserve account selection. Never log tokens or customer document contents; fixtures must be synthetic.
 
