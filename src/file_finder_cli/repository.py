@@ -10,17 +10,27 @@ class FileRepository:
         self.client = client
 
     def recent(self, limit: int) -> list[DriveItemCard]:
-        payload = self.client.get("/me/drive/recent", params={"$top": limit})
+        payload = self.client.get_all(
+            "/me/drive/recent", params={"$top": limit}, max_items=limit
+        )
         return self._parse_items(payload.get("value", []))
 
     def search(self, query: str, limit: int) -> list[DriveItemCard]:
         # OData string escaping must precede percent-encoding the path value.
         encoded = quote(query.replace("'", "''"), safe="")
-        payload = self.client.get(f"/me/drive/root/search(q='{encoded}')", params={"$top": limit})
+        payload = self.client.get_all(
+            f"/me/drive/root/search(q='{encoded}')",
+            params={"$top": limit},
+            max_items=limit,
+        )
         return self._parse_items(payload.get("value", []))
 
     def make_folder(self, name: str, parent_id: str | None = None) -> DriveItemCard:
-        path = f"/me/drive/items/{parent_id}/children" if parent_id else "/me/drive/root/children"
+        path = (
+            f"/me/drive/items/{parent_id}/children"
+            if parent_id
+            else "/me/drive/root/children"
+        )
         payload = self.client.post(
             path,
             {
@@ -50,7 +60,9 @@ class FileRepository:
 
     @staticmethod
     def _map_item(row: dict) -> DriveItemCard:
-        modifier = ((row.get("lastModifiedBy") or {}).get("user") or {}).get("displayName")
+        modifier = ((row.get("lastModifiedBy") or {}).get("user") or {}).get(
+            "displayName"
+        )
         parent_path = (row.get("parentReference") or {}).get("path")
         return DriveItemCard(
             id=row["id"],
