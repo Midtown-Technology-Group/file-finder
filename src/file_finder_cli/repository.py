@@ -14,7 +14,8 @@ class FileRepository:
         return self._parse_items(payload.get("value", []))
 
     def search(self, query: str, limit: int) -> list[DriveItemCard]:
-        encoded = quote(query, safe="")
+        # OData string escaping must precede percent-encoding the path value.
+        encoded = quote(query.replace("'", "''"), safe="")
         payload = self.client.get(f"/me/drive/root/search(q='{encoded}')", params={"$top": limit})
         return self._parse_items(payload.get("value", []))
 
