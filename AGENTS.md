@@ -9,3 +9,12 @@ Use the shared MTG Microsoft Auth application and cache without incidental ident
 Python >=3.10 and development dependencies are declared in `pyproject.toml`. Pytest discovers `tests/`; `tests/test_cli.py` uses fake services to cover output and permission boundaries. Run focused pytest checks in an isolated development environment and report what actually ran. README examples use `.\invoke.ps1`; a live search or action is not a unit test.
 
 Windows packaging lives in `packaging/windows/`. Preserve release-tag, installer checksum/ProductCode and mtg-winget dispatch contracts. MSI installation requires administrator rights. The Sonar job can skip when its token is missing, so do not claim test coverage from that status. Keep offline tests, authorized live pressure tests, package builds and publication evidence separate.
+
+## Secret gate before publication
+
+Before every push and PR creation/update, commit the complete candidate and run
+`python3 scripts/secret_gate.py` (native Windows: `python`). Require exit 0;
+missing tooling/authentication, scan errors and skipped scans block publication.
+Then run the existing repository gates. Repeat after changing outgoing commits.
+See [secret scanning](SECRET-SCANNING.md) for base selection, new branches,
+pre-push input and prerequisites. Preserve GitGuardian App, CI and Gitleaks checks.
